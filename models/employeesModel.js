@@ -51,14 +51,21 @@ const newEmployeeModel= async (values) => {
     }
 };
 
-const updateEmployeeModel = async (employee_id,employees) => {
+const updateEmployeeModel = async (newEmployee,oldEmployee) => {
     try {
+        const employees = {
+            ...oldEmployee,
+            ...newEmployee
+            }
+            console.log(employees);
         const rows = await conexion
-        .query('UPDATE employees SET first_name=?, last_name=?, cuit=?, team_id=?, join_date=?, rol=? WHERE employee_id =?',[body.first_name,body.last_name, body.cuit, body.team_id, body.join_date, body.rol](employees,employee_id))
+        .query('UPDATE employees SET first_name=?, last_name=?, cuit=?, team_id=?, join_date=?, rol=? WHERE employee_id =?',
+        [employees.first_name,employees.last_name, employees.cuit, employees.team_id, employees.join_date, employees.rol,employees.employee_id])
         .spread((rows) =>rows);
         
         return rows;
     } catch (error) {
+        console.log(error);
         const CustomError = new handleHttpError ("error", 500);
         return ({
             errorMessage : CustomError.message,

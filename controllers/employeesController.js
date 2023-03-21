@@ -58,9 +58,8 @@ const updateEmployee= async (req,res) => {
 
       const values= {...req.body};
       const updateEmployee = await employeesModel.updateEmployeeModel(values, foundEmployee);
-      console.log(values);
-      res.status (200)
-      .json ({message: " employee updated",data :updateEmployee});
+      console.log(updateEmployee);
+      res.status (200).json ({message: " employee updated",data :updateEmployee});
    }catch {
       const CustomError = new handleHttpError("an error happen , can't update employee",500);
        res.json({

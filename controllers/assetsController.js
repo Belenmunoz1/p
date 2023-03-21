@@ -78,7 +78,7 @@ const updateAssets= async (req,res) => {
       }
 
       const values= { ...req.body};
-      const foundEmployee = await employeesModel.getEmployeeByIdModel( values.employee_id);
+      const foundEmployee = await employeesModel.getEmployeeByIdModel( values,foundAssets);
       if (foundEmployee.length==0){
          return res.status(404).json ({ message:" the employee doesnt exist, cant upload"});
       }

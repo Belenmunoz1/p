@@ -67,11 +67,16 @@ const newAssetsModel= async (values) => {
     }
 };
 
-const updateAssetsModel = async (assets_id,assets) => {
+const updateAssetsModel = async (newAssets,oldAssets) => {
     try {
+        const assets = {
+            ...oldAssets,
+            ...newAssets
+        }
     const rows = await conexion
-    .query("UPDATE assets SET ? WHERE assets_id =?",[assets,assets_id])
-    .spread((rows) =>rows);
+    .query('UPDATE assets SET employee_id=?, type=?, code=?, marca=?, description=?, purchase_date=? WHERE assets_id =?',
+        [assets.employee_id,assets.type, assets.code, assets.marca, assets.description, assets.purchase_date])
+        .spread((rows) =>rows);
     
     return rows;
     } catch (error) {
