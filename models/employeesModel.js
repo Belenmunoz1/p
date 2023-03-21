@@ -9,7 +9,7 @@ const getAllEmployeesModel = async  () => {
     .spread ((rows) => rows);
     return rows ;
    } catch (error) {
-    const CustomError = new handleHttpError ("Error" , 404);
+    const CustomError = new handleHttpError ("error" , 500);
     return ({
         errorMessage : CustomError.message,
         code: CustomError.errorCode,
@@ -24,7 +24,7 @@ const getEmployeeByIdModel = async (employee_id) => {
     .spread ((rows) =>rows);
     return rows.length >0 ?rows [0] : null;
    } catch (error){
-     const CustomError = new handleHttpError ("error , 404");
+     const CustomError = new handleHttpError ("error , 500");
      return ({
         errorMessage : CustomError.mesage ,
         code: CustomError.errorCode,
@@ -43,7 +43,7 @@ const newEmployeeModel= async (values) => {
 
   return result;
     } catch (error) {
-        const CustomError = new handleHttpError ("error", 404);
+        const CustomError = new handleHttpError ("error", 500);
         return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,
@@ -59,7 +59,7 @@ const updateEmployeeModel = async (employee_id,employees) => {
     
     return rows;
     } catch (error) {
-        const CustomError = new handleHttpError ("error", 404);
+        const CustomError = new handleHttpError ("error", 500);
         return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,
@@ -74,7 +74,7 @@ const deleteEmployeeModel = async (employee_id) => {
     .spread((rows) =>rows);
     return rows.length > 0 ? rows [0] : [];
     }catch {
-        const CustomError = new handleHttpError ("error", 404);
+        const CustomError = new handleHttpError ("error", 500);
         return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,

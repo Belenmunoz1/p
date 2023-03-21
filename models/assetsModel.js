@@ -10,7 +10,7 @@ const getAllAssetsModel = async  () => {
     .spread ((rows) => rows);
     return rows ;
    } catch (error) {
-    const CustomError = new handleHttpError ("Error" , 404);
+    const CustomError = new handleHttpError ("error" , 500);
     return ({
         errorMessage : CustomError.message,
         code: CustomError.errorCode,
@@ -25,7 +25,7 @@ const getAssetsByIdModel = async (assets_id) => {
     .spread ((rows) =>rows);
     return rows.length >0 ?rows [0] : [];
    } catch (error){
-     const CustomError = new handleHttpError ("error , 404");
+     const CustomError = new handleHttpError ("error ", 500);
      return ({
         errorMessage : CustomError.mesage ,
         code: CustomError.errorCode,
@@ -59,7 +59,7 @@ const newAssetsModel= async (values) => {
 
   return result;
     } catch (error) {
-        const CustomError = new handleHttpError ("error", 404);
+        const CustomError = new handleHttpError ("error",500);
         return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,
@@ -75,7 +75,7 @@ const updateAssetsModel = async (assets_id,assets) => {
     
     return rows;
     } catch (error) {
-        const CustomError = new handleHttpError ("error", 404);
+        const CustomError = new handleHttpError ("error", 500);
         return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,
@@ -90,7 +90,7 @@ const deleteAssetsModel = async (assets_id) => {
     .spread((rows) =>rows);
     return rows.length > 0 ? rows [0] : null;
     }catch {
-        const CustomError = new handleHttpError ("error", 404);
+        const CustomError = new handleHttpError ("error", 500);
         return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,

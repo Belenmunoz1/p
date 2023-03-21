@@ -21,7 +21,7 @@ const getAssetsById= async  (req,res) => {
    try {
       const {assets_id} = req.params;
       const assets = await assetsModel.getAssetsByIdModel(assets_id);
-      if (assets == 0) {return res.status(404).json({ message: "the assetsById doesnt exist" });
+      if (assets.length == 0) {return res.status(404).json({ message: "the assetsById doesnt exist" });
       }
   
       res.status(200).json({ data: assets });
@@ -37,7 +37,7 @@ const getAssetsByEmployeeId= async (req, res) => {
    try {
      const {employee_id} = req.params;
      const result = await assetsModel.getAssetsByEmployeeId(employee_id);
-     if (result == 0) {return res.status(404).json({ message: "the employee doesnt exist" });
+     if (result.length == 0) {return res.status(404).json({ message: "the employee doesnt exist" });
      }
  
      res.json({ data: result });
@@ -73,13 +73,13 @@ const updateAssets= async (req,res) => {
    try {
       const {assets_id} = req.params;
       const foundAssets = await assetsModel.getAssetsByIdModel(assets_id);
-      if (!foundAssets) {
+      if (foundAssets.length==0) {
          return res.status(404).json ({ message: "assets not found"});
       }
 
       const values= { ...req.body};
       const foundEmployee = await employeesModel.getEmployeeByIdModel( values.employee_id);
-      if (!foundEmployee){
+      if (foundEmployee.length==0){
          return res.status(404).json ({ message:" the employee doesnt exist, cant upload"});
       }
       const updateAssets = await assetsModel.updateAssetsModel(foundAssets,values);
@@ -99,9 +99,10 @@ const deleteAssets=async (req,res) => {
    try {
       const {assets_id} = req.params
       await assetsModel.deleteAssetsModel(assets_id);
-      res.status(200).json ({ message:`the assets ${assets_id} was deleted`});
+      if (!assets_id) {return res.status(404).json({ message: " employee not found" });}
+      res.status(200).json ({ message:`the assets  was deleted`});
    } catch{
-      const CustomError = new handleHttpError("an error happen , can't delete assets",401);
+      const CustomError = new handleHttpError("an error happen , can't delete assets",500);
        res.json({
          errorMessage: CustomError.message,
          code: CustomError.errorCode,
