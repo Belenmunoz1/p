@@ -1,18 +1,16 @@
-const conexion = require ("../config/db.config");
+const conexion = require("../config/db.config");
 const handleHttpError = require("../handleHttpError");
-const HttpError = require ("../handleHttpError");
 
 
 const getAllEmployeesModel = async  () => {
-   try {
+    try {
     const rows = await conexion
     .query (" SELECT * FROM employees")
     .spread ((rows) => rows);
-
     return rows ;
    } catch (error) {
     const CustomError = new handleHttpError ("Error" , 404);
-    res.json ({
+    return ({
         errorMessage : CustomError.message,
         code: CustomError.errorCode,
     });
@@ -22,12 +20,12 @@ const getAllEmployeesModel = async  () => {
 const getEmployeeByIdModel = async (employee_id) => {
    try {
     const rows = await conexion 
-    .query ("SELECT * FROM employees where employee_id = ?",[employee_id])
+    .query("SELECT * FROM employees where employee_id = ?",[employee_id])
     .spread ((rows) =>rows);
-    return rows.length >0 ?rows [0] : [];
+    return rows.length >0 ?rows [0] : null;
    } catch (error){
      const CustomError = new handleHttpError ("error , 404");
-     res.json ({
+     return ({
         errorMessage : CustomError.mesage ,
         code: CustomError.errorCode,
      });
@@ -40,30 +38,29 @@ const newEmployeeModel= async (values) => {
   const {first_name , last_name, cuit, team_id, join_date, rol} = values;
   const result = await conexion
   .query ("INSERT INTO employees (first_name, last_name, cuit, team_id, join_date, rol) values (?,?,?,?,?,?)",
-  [first_name, last_name, cuit, team_id, join_date, rol]
-  )
+  [first_name, last_name, cuit, team_id, join_date, rol])
   .spread((result) => result);
 
   return result;
     } catch (error) {
         const CustomError = new handleHttpError ("error", 404);
-        res.json ({
+        return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,
         });
     }
 };
 
-const updateEmployeeModel = async (employee_id,employee) => {
+const updateEmployeeModel = async (employee_id,employees) => {
     try {
     const rows = await conexion
-    .query("UPDATE `employees` SET ? WHERE `employee_id` =?",[employee_id,employee])
+    .query("UPDATE employees SET ? WHERE employee_id =?",[employee_id,employees])
     .spread((rows) =>rows);
     
     return rows;
     } catch (error) {
         const CustomError = new handleHttpError ("error", 404);
-        res.json ({
+        return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,
         });
@@ -73,12 +70,12 @@ const updateEmployeeModel = async (employee_id,employee) => {
 const deleteEmployeeModel = async (employee_id) => {
     try {
     const rows = await conexion
-    .query("DELETE FROM `employees` WHERE `employee_id` = ?" , [employee_id])
+    .query("DELETE FROM employees WHERE employee_id = ?" , [employee_id])
     .spread((rows) =>rows);
     return rows.length > 0 ? rows [0] : [];
     }catch {
         const CustomError = new handleHttpError ("error", 404);
-        res.json ({
+        return ({
             errorMessage : CustomError.message,
             code: CustomError.errorCode,
         });
@@ -90,5 +87,5 @@ module.exports = {
     getEmployeeByIdModel,
     newEmployeeModel,
     updateEmployeeModel,
-    deleteEmployeeModel,
+    deleteEmployeeModel
 };

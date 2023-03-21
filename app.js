@@ -1,7 +1,7 @@
 const express = require("express");
-const cors = require("cors");
-const dotEnv= require("dotenv");
+// const cors = require("cors");
 const morgan = require("morgan");
+require("dotenv").config();
 
 const assetsRouter = require ("./routes/assetsRoutes");
 const employeesRouter = require ("./routes/employeesRoutes");
@@ -10,9 +10,10 @@ const employeesRouter = require ("./routes/employeesRoutes");
 const app = express();
 const port = process.env.API_PORT || 3000;
 
+
 app.use(morgan("dev"));
 // middleware para resolver error cors
-app.use(cors());
+// app.use(cors());
 
 //middleware para recibir en formato jsno
 app.use(express.json({limit:"50mb"}));

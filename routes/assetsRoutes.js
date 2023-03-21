@@ -10,11 +10,11 @@ const{ getAllAssets,getAssetsById,getAssetsByEmployeeId,newAssets,updateAssets,d
 // rutas de los assets
 
 assetsRouter.get("/", getAllAssets);
-assetsRouter.get("/:asset_id",getAssetsById);
-assetsRouter.get("/emplid/:employee_id",getAssetsByEmployeeId);
+assetsRouter.get("/:assets_id",getAssetsById);
+assetsRouter.get("/employeeid/:employee_id",getAssetsByEmployeeId);
 assetsRouter.post("/new",newAssets);
-assetsRouter.put("/update/:asset_id",updateAssets);
-assetsRouter.delete("/delete/:asset_id",deleteAssets);
+assetsRouter.put("/update/:assets_id",updateAssets);
+assetsRouter.delete("/delete/:assets_id",deleteAssets);
 
 
 
