@@ -1,10 +1,6 @@
 const assetsRouter = require("express").Router();
 
-// / importamos las const de los controllers
 const{ getAllAssets,getAssetsById,getAssetsByEmployeeId,newAssets,updateAssets,deleteAssets} = require ("../controllers/assetsController")
-
-
-
 
 
 // rutas de los assets

@@ -70,7 +70,7 @@ const newAssetsModel= async (values) => {
 const updateAssetsModel = async (assets_id,assets) => {
     try {
     const rows = await conexion
-    .query("UPDATE assets SET ? WHERE assets_id =?",[assets_id,assets])
+    .query("UPDATE assets SET ? WHERE assets_id =?",[assets,assets_id])
     .spread((rows) =>rows);
     
     return rows;

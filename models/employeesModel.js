@@ -54,7 +54,7 @@ const newEmployeeModel= async (values) => {
 const updateEmployeeModel = async (employee_id,employees) => {
     try {
     const rows = await conexion
-    .query("UPDATE employees SET ? WHERE employee_id =?",[employee_id,employees])
+    .query("UPDATE employees SET ? WHERE employee_id =?",[employees,employee_id])
     .spread((rows) =>rows);
     
     return rows;

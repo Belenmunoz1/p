@@ -1,8 +1,5 @@
-//funcion de express que sirve como manejador de rutas
 const employeesRouter = require("express").Router();
 
-
-// / importamos las const de los controllers
 const{getAllEmployees,getEmployeeById,newEmployee,updateEmployee,deleteEmployee} = require("../controllers/employeesController");
 
 //declaracion de las rutas de employees

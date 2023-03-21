@@ -1,6 +1,3 @@
-
-// importo el employeeModel y el manjador de errores
-
 const handleHttpError = require("../handleHttpError");
 const employeesModel = require("../models/employeesModel");
 
@@ -49,17 +46,20 @@ const newEmployee= async(req,res) => {
    }
 
 };
+
 const updateEmployee= async (req,res) => {
    try {
       const {employee_id} = req.params;
       const foundEmployee = await employeesModel.getEmployeeByIdModel(employee_id);
-      if (!foundEmployee) {
+      console.log(foundEmployee);
+      if (foundEmployee==0) {
          return res.status(404).json ({ message: "employee doesnt exists , cant unpload "});
       }
 
       const values= { ...req.body};
       const updateEmployee = await employeesModel.updateEmployeeModel(values, foundEmployee);
-      res.status (200).json ({message: " employee updated",updateEmployee,});
+      console.log(updateEmployee);
+      res.status (200).json ({message: " employee updated",updateEmployee});
    }catch {
       const CustomError = new handleHttpError("an error happen , can't update employee",500);
        res.json({
