@@ -37,7 +37,7 @@ const newEmployee= async(req,res) => {
       res.status(201)
       res.json({message: "new employee added :)", data :newemployee});
    }catch (error) {
-      const CustomError = new handleHttpError("an error happen , can't add new employee",401);
+      const CustomError = new handleHttpError("an error happen , can't add new employee",500);
        res.json({
          errorMessage: CustomError.message,
          code: CustomError.errorCode,
@@ -51,21 +51,23 @@ const updateEmployee= async (req,res) => {
    try {
       const {employee_id} = req.params;
       const foundEmployee = await employeesModel.getEmployeeByIdModel(employee_id);
-      console.log(foundEmployee);
+    
       if (foundEmployee.length ==0) {
          return res.status(404).json ({ message: "employee doesnt exists , cant unpload "});
       }
 
-      const values= { ...req.body};
+      const values= {...req.body};
       const updateEmployee = await employeesModel.updateEmployeeModel(values, foundEmployee);
-      console.log(updateEmployee);
-      res.status (200).json ({message: " employee updated",updateEmployee});
+      console.log(values);
+      res.status (200)
+      .json ({message: " employee updated",data :updateEmployee});
    }catch {
       const CustomError = new handleHttpError("an error happen , can't update employee",500);
        res.json({
          errorMessage: CustomError.message,
          code: CustomError.errorCode,
-       });
+         
+      });
       
    }
 };
@@ -73,13 +75,12 @@ const deleteEmployee= async (req,res) => {
    try {
       const {employee_id} = req.params
       await employeesModel.deleteEmployeeModel(employee_id);
-      // if (!employee_id) {
-      //    return res.status(404).json ({ message: "employee doesnt exists , cant delete "});
-      // }
-      if (!employee) {return res.status(404).json({ message: " employee not found" });}
+      if (!employee_id) {
+         return res.status(404).json ({ message: "employee doesnt exists , cant delete "});
+      }
       res.status(200).json ({ message:`the employee was deleted`});
    } catch{
-      const CustomError = new handleHttpError("an error happen , can't delete employee",401);
+      const CustomError = new handleHttpError("an error happen , can't delete employee",500);
        res.json({
          errorMessage: CustomError.message,
          code: CustomError.errorCode,

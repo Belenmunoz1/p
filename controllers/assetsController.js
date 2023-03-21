@@ -85,7 +85,7 @@ const updateAssets= async (req,res) => {
       const updateAssets = await assetsModel.updateAssetsModel(foundAssets,values);
       res
       .status(200)
-      .json ({message: "assets updated",updateAssets});
+      .json ({message: "assets updated",data:updateAssets});
    }catch {
       const CustomError = new handleHttpError("an error happen , can't update assets",500);
        res.json({
